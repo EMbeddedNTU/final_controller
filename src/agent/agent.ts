@@ -1,3 +1,5 @@
+import { FunctionState } from "./function_state";
+
 export enum AgentLocation {
     attic, 
     bathroom,
@@ -11,17 +13,13 @@ export enum AgentLocation {
     other
 }
 
-export enum AgentFunction {
-    light,
-    lock,
-}
 
 export class Agent {
     id: number;
 
     name: string;
 
-    functions: AgentFunction[];
+    functions: FunctionState[];
 
     function_state: any;
 
