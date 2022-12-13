@@ -1,8 +1,9 @@
 export enum FunctionType {
-    light,
-    lock,
+  light,
+  lock,
 }
 
 export class FunctionState {
-    type: FunctionType
+  type: FunctionType;
+  state: number;
 }

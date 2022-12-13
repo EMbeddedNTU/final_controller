@@ -1,27 +1,26 @@
-import { FunctionState } from "./function_state";
+import { FunctionState } from './function_state';
 
 export enum AgentLocation {
-    attic, 
-    bathroom,
-    basement,
-    bedroom,
-    hall,
-    kitchen,
-    porch,
-    dining_room,
-    living_room,
-    other
+  attic,
+  bathroom,
+  basement,
+  bedroom,
+  hall,
+  kitchen,
+  porch,
+  dining_room,
+  living_room,
+  other,
 }
 
-
 export class Agent {
-    id: number;
+  id: number;
+  name: string;
+  location: AgentLocation;
+  functionStateList: FunctionState[];
+}
 
-    name: string;
-
-    functions: FunctionState[];
-
-    function_state: any;
-
-    location: AgentLocation;
+export class gestureInput {
+  agentId: number;
+  gesture: string;
 }
