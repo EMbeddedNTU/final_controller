@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { FunctionState, FunctionType } from 'src/state/function_state';
+import { LightState } from 'src/state/light_state';
 import { Agent, gestureInput } from './agent';
-import { FunctionState, FunctionType } from './function_state';
 
 @Injectable()
 export class AgentService {
@@ -8,13 +9,11 @@ export class AgentService {
 
   registerAgent(body: Agent): boolean {
     let targetAgent: Agent = this.table.find(
-      (agent: Agent) => agent.name == body.name,
+      (agent: Agent) => agent.id == body.id,
     );
 
     if (targetAgent == undefined) {
       this.table.push(body);
-    } else {
-      Object.assign(targetAgent, body);
     }
 
     console.log(this.table);
@@ -30,10 +29,11 @@ export class AgentService {
     if (targetAgent == undefined) {
       return false;
     } else {
-      let targetFunctionState = targetAgent.functionStateList.find(
+      let targetFunctionState: LightState = targetAgent.functionStateList.find(
         (functionState: FunctionState) =>
           functionState.type == FunctionType.light,
       );
+
       targetFunctionState.state = 1 - targetFunctionState.state;
       return true;
     }

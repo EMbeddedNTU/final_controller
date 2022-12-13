@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { FunctionState } from 'src/state/function_state';
 import { Agent, gestureInput } from './agent';
 import { AgentService } from './agent.service';
-import { FunctionState } from './function_state';
 
 @Controller('agent')
 export class AgentController {
