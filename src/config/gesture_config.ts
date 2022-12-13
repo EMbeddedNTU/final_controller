@@ -1,38 +1,31 @@
-import { Agent } from "src/agent/agent";
-import { StateCommand } from "src/state/state_command";
+import { Agent } from 'src/agent/agent';
+import { StateCommand } from 'src/state/state_command';
 
 export enum GestureType {
-    up,
-    down,
-    right,
-    left,
-    forward,
-    backward
+  left,
+  right,
+  backward,
+  forward,
+  down,
+  up,
 }
 
 export class GestureEffect {
-    
-    agent: Agent;
+  agent: Agent;
 
-    command: StateCommand;
+  command: StateCommand;
 }
 
 export class GestureSetting {
-    
-    gestureType: GestureType;
+  gestureType: GestureType;
 
-    effects: GestureEffect[];
-
+  effects: GestureEffect[];
 }
 
-
 export class GestureConfig {
-    
-    constructor(
-        gesture_settings: GestureSetting[]
-    ) {
-        this.gesture_settings = gesture_settings;
-    }
+  constructor(gesture_settings: GestureSetting[]) {
+    this.gesture_settings = gesture_settings;
+  }
 
-    gesture_settings: GestureSetting[];
+  gesture_settings: GestureSetting[];
 }

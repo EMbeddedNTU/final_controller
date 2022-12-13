@@ -1,3 +1,4 @@
+import { GestureType } from 'src/config/gesture_config';
 import { FunctionState } from '../state/function_state';
 
 export enum AgentLocation {
@@ -33,5 +34,5 @@ export class Agent {
 
 export class gestureInput {
   agentId: number;
-  gesture: string;
+  gesture: GestureType;
 }
