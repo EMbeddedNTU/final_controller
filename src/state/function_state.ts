@@ -3,6 +3,6 @@ export enum FunctionType {
     lock,
 }
 
-export class FunctionState {
+export interface FunctionState {
     type: FunctionType
 }

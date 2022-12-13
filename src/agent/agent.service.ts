@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Agent } from 'http';
+import { Agent } from './agent';
 
 @Injectable()
 export class AgentService {
