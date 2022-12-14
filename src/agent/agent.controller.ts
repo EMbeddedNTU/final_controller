@@ -1,4 +1,6 @@
-import { Controller, Get, Param, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { FunctionState } from 'src/state/function_state';
+import { Agent, gestureInput } from './agent';
 import { AgentService } from './agent.service';
 
 @Controller('agent')
@@ -6,12 +8,17 @@ export class AgentController {
   constructor(private readonly agentService: AgentService) {}
 
   @Post('register')
-  registerAgent(@Request() req): boolean {
-    return this.agentService.registerAgent(req);
+  registerAgent(@Body() body: Agent): boolean {
+    return this.agentService.registerAgent(body);
+  }
+
+  @Post('gesture')
+  gesture(@Body() body: gestureInput): boolean {
+    return this.agentService.gesture(body);
   }
 
   @Get('/:id')
-  getStatus(@Param('id') id: number) {
+  getStatus(@Param('id') id: number): FunctionState[] {
     return this.agentService.getStatus(id);
   }
 }

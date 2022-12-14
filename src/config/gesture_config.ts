@@ -1,13 +1,13 @@
-import { Transform, Type } from "class-transformer";
+import { Type } from "class-transformer";
 import { Agent } from "src/agent/agent";
 
 export enum GestureType {
-    up,
-    down,
-    right,
-    left,
-    forward,
-    backward
+  left,
+  right,
+  backward,
+  forward,
+  down,
+  up,
 }
 
 export enum EffectType {
@@ -54,12 +54,8 @@ export class GestureSetting {
     effects: GestureEffect[];
 }
 
-
 export class GestureConfig {
-    
-    constructor(
-        gesture_settings: GestureSetting[]
-    ) {
+    constructor(gesture_settings: GestureSetting[]) {
         this.gesture_settings = gesture_settings;
     }
 
