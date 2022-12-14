@@ -29,12 +29,13 @@ export class AgentService {
     if (targetAgent == undefined) {
       return false;
     } else {
-      let targetFunctionState: LightState = targetAgent.functionStateList.find(
+      let targetFunctionState = targetAgent.functionStateList.find(
         (functionState: FunctionState) =>
           functionState.type == FunctionType.light,
       );
-
-      targetFunctionState.state = 1 - targetFunctionState.state;
+      
+      let lightState = targetFunctionState as LightState;
+      lightState.state = 1 - lightState.state;
       return true;
     }
   }

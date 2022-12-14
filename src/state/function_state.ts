@@ -5,5 +5,4 @@ export enum FunctionType {
 
 export interface FunctionState {
   type: FunctionType;
-  state: any;
 }

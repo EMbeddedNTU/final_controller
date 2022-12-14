@@ -1,5 +1,5 @@
-import { Type } from "class-transformer";
-import { Agent } from "src/agent/agent";
+import { Type } from 'class-transformer';
+import { Agent } from 'src/agent/agent';
 
 export enum GestureType {
   left,
@@ -11,54 +11,49 @@ export enum GestureType {
 }
 
 export enum EffectType {
-    local,
-    specific
+  local,
+  specific,
 }
 
 export class GestureEffect {
+  constructor(agent: Agent, command_id: number) {
+    this.agent = agent;
+    this.command_id = command_id;
+  }
 
-    constructor(
-        agent: Agent,
-        command_id: number
-    ) {
-        this.agent = agent;
-        this.command_id = command_id;
-    }
-    
-    agent: Agent;
+  agent: Agent;
 
-    command_id: number;
+  command_id: number;
 }
 
 export class GestureSetting {
-    
-    constructor(
-        gestureType: GestureType,
-        agent_trigger: Agent,
-        effect_type: EffectType,
-        effects: GestureEffect[]
-    ) {
-        this.gestureType = gestureType;
-        this.agent_trigger = agent_trigger;
-        this.effect_type = effect_type;
-        this.effects = effects;
-    }
+  constructor(
+    gestureType: GestureType,
+    agent_trigger: Agent,
+    effect_type: EffectType,
+    effects: GestureEffect[],
+  ) {
+    this.gestureType = gestureType;
+    this.agent_trigger = agent_trigger;
+    this.effect_type = effect_type;
+    this.effects = effects;
+  }
 
-    gestureType: GestureType;
+  gestureType: GestureType;
 
-    agent_trigger: Agent;
+  agent_trigger: Agent;
 
-    effect_type: EffectType;
+  effect_type: EffectType;
 
-    @Type(() => GestureEffect)
-    effects: GestureEffect[];
+  @Type(() => GestureEffect)
+  effects: GestureEffect[];
 }
 
 export class GestureConfig {
-    constructor(gesture_settings: GestureSetting[]) {
-        this.gesture_settings = gesture_settings;
-    }
+  constructor(gesture_settings: GestureSetting[]) {
+    this.gesture_settings = gesture_settings;
+  }
 
-    @Type(() => GestureSetting)
-    gesture_settings: GestureSetting[];
+  @Type(() => GestureSetting)
+  gesture_settings: GestureSetting[];
 }
