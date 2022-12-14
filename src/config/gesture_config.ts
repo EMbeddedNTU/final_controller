@@ -1,5 +1,5 @@
+import { Transform, Type } from "class-transformer";
 import { Agent } from "src/agent/agent";
-import { StateCommand } from "src/state/state_command";
 
 export enum GestureType {
     up,
@@ -10,19 +10,48 @@ export enum GestureType {
     backward
 }
 
+export enum EffectType {
+    local,
+    specific
+}
+
 export class GestureEffect {
+
+    constructor(
+        agent: Agent,
+        command_id: number
+    ) {
+        this.agent = agent;
+        this.command_id = command_id;
+    }
     
     agent: Agent;
 
-    command: StateCommand;
+    command_id: number;
 }
 
 export class GestureSetting {
     
+    constructor(
+        gestureType: GestureType,
+        agent_trigger: Agent,
+        effect_type: EffectType,
+        effects: GestureEffect[]
+    ) {
+        this.gestureType = gestureType;
+        this.agent_trigger = agent_trigger;
+        this.effect_type = effect_type;
+        this.effects = effects;
+    }
+
     gestureType: GestureType;
 
-    effects: GestureEffect[];
+    agent_trigger: Agent;
 
+    effect_type: EffectType;
+
+    @Type(() => GestureEffect)
+    effects: GestureEffect[];
 }
 
 
@@ -34,5 +63,6 @@ export class GestureConfig {
         this.gesture_settings = gesture_settings;
     }
 
+    @Type(() => GestureSetting)
     gesture_settings: GestureSetting[];
 }

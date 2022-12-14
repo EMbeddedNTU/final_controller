@@ -1,0 +1,25 @@
+{
+ "gesture_settings": [
+  {
+   "gestureType": 5,
+   "agent_trigger": {
+    "id": 0,
+    "name": "test",
+    "functions": [],
+    "location": 0
+   },
+   "effect_type": 0,
+   "effects": [
+    {
+     "agent": {
+      "id": 0,
+      "name": "test",
+      "functions": [],
+      "location": 0
+     },
+     "command_id": 0
+    }
+   ]
+  }
+ ]
+}
