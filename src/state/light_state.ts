@@ -7,5 +7,5 @@ export enum LightStateEnum {
 
 export class LightState implements FunctionState {
   type: FunctionType;
-  state: LightStateEnum;
+  light_state: LightStateEnum;
 }

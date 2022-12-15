@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { Agent } from 'src/agent/agent';
+import { StateCommand } from 'src/state/state_command';
 
 export enum GestureType {
   left,
@@ -16,32 +17,32 @@ export enum EffectType {
 }
 
 export class GestureEffect {
-  constructor(agent: Agent, command_id: number) {
+  constructor(command: StateCommand, agent?: Agent | null) {
     this.agent = agent;
-    this.command_id = command_id;
+    this.command = command;
   }
 
-  agent: Agent;
+  agent?: Agent | null;
 
-  command_id: number;
+  command: StateCommand;
 }
 
 export class GestureSetting {
   constructor(
     gestureType: GestureType,
-    agent_trigger: Agent,
     effect_type: EffectType,
     effects: GestureEffect[],
+    agent_trigger?: Agent | null,
   ) {
     this.gestureType = gestureType;
-    this.agent_trigger = agent_trigger;
     this.effect_type = effect_type;
     this.effects = effects;
+    this.agent_trigger = agent_trigger;
   }
 
   gestureType: GestureType;
 
-  agent_trigger: Agent;
+  agent_trigger?: Agent | null;
 
   effect_type: EffectType;
 

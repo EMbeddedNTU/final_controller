@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FunctionState } from './function_state';
+import { FunctionState, FunctionType } from './function_state';
 import { LightState } from './light_state';
 import { LockState } from './lock_state';
 import { StateCommand } from "./state_command";
@@ -14,16 +14,8 @@ export class StateCommandFactory {
         StateCommandFactory.id = 0;
     }
 
-    createLightStateCommand(f_state: ((f_state: LightState)=>LightState)): StateCommand {
-        return this.createStateCommand<LightState>(f_state)
-    }
-
-    createLockStateCommand(f_state: ((f_state: LockState)=>LockState)): StateCommand {
-        return this.createStateCommand<LockState>(f_state)
-    }
-
-    private createStateCommand<StateType extends FunctionState>(f_state: ((f_state: StateType)=>StateType)): StateCommand {
+    createStateCommand<StateType extends FunctionState>(name: string, state_type: FunctionType, f_state: ((f_state: StateType)=>StateType)): StateCommand {
         StateCommandFactory.id++
-        return new StateCommand(StateCommandFactory.id, f_state)
+        return new StateCommand(StateCommandFactory.id, name, state_type, f_state)
     }
 }

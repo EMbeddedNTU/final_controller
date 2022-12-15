@@ -35,7 +35,7 @@ export class AgentService {
       );
       
       let lightState = targetFunctionState as LightState;
-      lightState.state = 1 - lightState.state;
+      lightState.light_state = 1 - lightState.light_state;
       return true;
     }
   }
