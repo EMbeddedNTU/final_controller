@@ -9,8 +9,8 @@ export enum AgentLocation {
   hall,
   kitchen,
   porch,
-  dining_room,
-  living_room,
+  diningRoom,
+  livingRoom,
   other,
 }
 

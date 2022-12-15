@@ -7,4 +7,4 @@ import { StateCommandService } from './state_command_service';
   controllers: [],
   providers: [StateCommandService, StateCommandFactory],
 })
-export class ConfigModule {}
+export class StateCommandModule {}

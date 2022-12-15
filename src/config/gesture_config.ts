@@ -30,31 +30,31 @@ export class GestureEffect {
 export class GestureSetting {
   constructor(
     gestureType: GestureType,
-    effect_type: EffectType,
+    effectType: EffectType,
     effects: GestureEffect[],
-    agent_trigger?: Agent | null,
+    agentTrigger?: Agent | null,
   ) {
     this.gestureType = gestureType;
-    this.effect_type = effect_type;
+    this.effectType = effectType;
     this.effects = effects;
-    this.agent_trigger = agent_trigger;
+    this.agentTrigger = agentTrigger;
   }
 
   gestureType: GestureType;
 
-  agent_trigger?: Agent | null;
+  agentTrigger?: Agent | null;
 
-  effect_type: EffectType;
+  effectType: EffectType;
 
   @Type(() => GestureEffect)
   effects: GestureEffect[];
 }
 
 export class GestureConfig {
-  constructor(gesture_settings: GestureSetting[]) {
-    this.gesture_settings = gesture_settings;
+  constructor(gestureSettings: GestureSetting[]) {
+    this.gestureSettings = gestureSettings;
   }
 
   @Type(() => GestureSetting)
-  gesture_settings: GestureSetting[];
+  gestureSettings: GestureSetting[];
 }

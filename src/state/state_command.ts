@@ -1,27 +1,25 @@
-import { Expose } from "class-transformer";
-import { FunctionState, FunctionType } from "./function_state";
+import { FunctionState, FunctionType } from './function_state';
 
-export type StateCommandFunc = (f_state: FunctionState)=>FunctionState
+export type StateCommandFunc = (fState: FunctionState) => FunctionState;
 
 export class StateCommand {
+  constructor(
+    id: number,
+    name: string,
+    stateType: FunctionType,
+    stateFunction: StateCommandFunc,
+  ) {
+    this.id = id;
+    this.name = name;
+    this.stateType = stateType;
+    this.stateFunction = stateFunction;
+  }
 
-    constructor(
-        id: number,
-        name: string,
-        state_type: FunctionType,
-        state_function: StateCommandFunc
-    ) {
-        this.id = id;
-        this.name = name;
-        this.state_type = state_type;
-        this.state_function = state_function;
-    }
+  id: number;
 
-    id: number;
+  name: string;
 
-    name: string;
+  stateType: FunctionType;
 
-    state_type: FunctionType;
-
-    state_function: StateCommandFunc;
+  stateFunction: StateCommandFunc;
 }

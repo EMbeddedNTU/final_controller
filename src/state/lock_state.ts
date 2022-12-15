@@ -7,5 +7,5 @@ export enum LockStateEnum {
 
 export class LockState implements FunctionState {
   type: FunctionType;
-  lock_state: LockStateEnum;
+  lockState: LockStateEnum;
 }

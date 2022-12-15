@@ -8,38 +8,51 @@ import { StateCommandFactory } from './state_command_factory';
 
 @Injectable()
 export class StateCommandService {
-	static state_command_list: StateCommand[];
+  static stateCommandList: StateCommand[];
 
-	constructor(private readonly stateCmdFactory: StateCommandFactory) {
-		StateCommandService.state_command_list = [];
-		this.initStateCommand(stateCmdFactory);
-	}
-	
-	addLightStateCommand(name: string, f_state: ((f_state: LightState)=>LightState)) {
-		let state_cmd: StateCommand = this.stateCmdFactory.createStateCommand<LightState>(name, FunctionType.light, f_state);
-		StateCommandService.state_command_list.push(state_cmd);
-	}
+  constructor(private readonly stateCmdFactory: StateCommandFactory) {
+    StateCommandService.stateCommandList = [];
+    this.initStateCommand(stateCmdFactory);
+  }
 
-	addLockStateCommand(name: string, f_state: ((f_state: LockState)=>LockState)) {
-		let state_cmd: StateCommand = this.stateCmdFactory.createStateCommand<LockState>(name, FunctionType.lock, f_state);
-		StateCommandService.state_command_list.push(state_cmd);
-	}
+  addLightStateCommand(
+    name: string,
+    fState: (fState: LightState) => LightState,
+  ) {
+    let stateCmd: StateCommand =
+      this.stateCmdFactory.createStateCommand<LightState>(
+        name,
+        FunctionType.light,
+        fState,
+      );
+    StateCommandService.stateCommandList.push(stateCmd);
+  }
 
-	getCommandById(id: number): StateCommand | null{
-		if (id >= StateCommandService.state_command_list.length)
-			console.error("Command list index out of bound error");
-		return StateCommandService.state_command_list[id];
-	}
+  addLockStateCommand(name: string, fState: (fState: LockState) => LockState) {
+    let stateCmd: StateCommand =
+      this.stateCmdFactory.createStateCommand<LockState>(
+        name,
+        FunctionType.lock,
+        fState,
+      );
+    StateCommandService.stateCommandList.push(stateCmd);
+  }
 
-	initStateCommand(factory: StateCommandFactory) {
-		this.addLightStateCommand("turn on light", (state) => {
-			state.light_state = LightStateEnum.ON;
-			return state;
-		});
+  getCommandById(id: number): StateCommand | null {
+    if (id >= StateCommandService.stateCommandList.length)
+      console.error('Command list index out of bound error');
+    return StateCommandService.stateCommandList[id];
+  }
 
-		this.addLightStateCommand("turn off light", (state) => {
-			state.light_state = LightStateEnum.OFF;
-			return state;
-		});
-	}
+  initStateCommand(factory: StateCommandFactory) {
+    this.addLightStateCommand('turn on light', (state) => {
+      state.lightState = LightStateEnum.ON;
+      return state;
+    });
+
+    this.addLightStateCommand('turn off light', (state) => {
+      state.lightState = LightStateEnum.OFF;
+      return state;
+    });
+  }
 }

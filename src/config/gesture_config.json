@@ -1,29 +1,3 @@
 {
- "gesture_settings": [
-  {
-   "gestureType": 2,
-   "effect_type": 0,
-   "effects": [
-    {
-     "agent": {
-      "id": 0,
-      "name": "test",
-      "functionStateList": [],
-      "location": 0
-     },
-     "command": {
-      "id": 0,
-      "name": "test_command",
-      "state_type": 0
-     }
-    }
-   ],
-   "agent_trigger": {
-    "id": 0,
-    "name": "test",
-    "functionStateList": [],
-    "location": 0
-   }
-  }
- ]
+ "gestureSettings": []
 }
