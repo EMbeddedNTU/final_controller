@@ -15,7 +15,7 @@ export class StateCommandFactory {
     stateType: FunctionType,
     fState: (fState: StateType) => StateType,
   ): StateCommand {
-    StateCommandFactory.id++;
+    StateCommandFactory.id += 1;
     return new StateCommand(StateCommandFactory.id, name, stateType, fState);
   }
 }

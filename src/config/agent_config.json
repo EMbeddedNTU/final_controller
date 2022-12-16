@@ -1,3 +1,15 @@
 {
- "agents": []
+ "agents": [
+  {
+   "id": 1,
+   "name": "裝置一",
+   "location": "廚房",
+   "functionStateList": [
+    {
+     "type": 0,
+     "lightState": 0
+    }
+   ]
+  }
+ ]
 }

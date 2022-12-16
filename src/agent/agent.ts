@@ -1,25 +1,12 @@
 import { GestureType } from 'src/config/gesture_config';
 import { FunctionState } from '../state/function_state';
 
-export enum AgentLocation {
-  attic,
-  bathroom,
-  basement,
-  bedroom,
-  hall,
-  kitchen,
-  porch,
-  diningRoom,
-  livingRoom,
-  other,
-}
-
 export class Agent {
   constructor(
     id: number,
     name: string,
     functionStateList: FunctionState[],
-    location: AgentLocation,
+    location: string,
   ) {
     this.id = id;
     this.name = name;
@@ -28,11 +15,11 @@ export class Agent {
   }
   id: number;
   name: string;
-  location: AgentLocation;
+  location: string;
   functionStateList: FunctionState[];
 }
 
-export class gestureInput {
+export class GestureInput {
   agentId: number;
   gesture: GestureType;
 }

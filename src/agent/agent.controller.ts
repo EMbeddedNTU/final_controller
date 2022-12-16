@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { FunctionState } from 'src/state/function_state';
-import { Agent, gestureInput } from './agent';
+import { Agent, GestureInput } from './agent';
 import { AgentService } from './agent.service';
 
 @Controller('agent')
@@ -13,7 +13,7 @@ export class AgentController {
   }
 
   @Post('gesture')
-  gesture(@Body() body: gestureInput): boolean {
+  gesture(@Body() body: GestureInput): boolean {
     return this.agentService.gesture(body);
   }
 

@@ -1,3 +1,56 @@
 {
- "gestureSettings": []
+ "gestureSettings": [
+  {
+   "gestureType": 1,
+   "effectType": 0,
+   "effects": [
+    {
+     "agent": null,
+     "command": {
+      "id": 1,
+      "name": "關燈",
+      "stateType": 0,
+      "stateFunction": null
+     }
+    }
+   ],
+   "agentTrigger": null
+  },
+  {
+   "gestureType": 0,
+   "effectType": 1,
+   "effects": [
+    {
+     "agent": {
+      "id": 1,
+      "name": "裝置一",
+      "location": "廚房",
+      "functionStateList": [
+       {
+        "type": 0,
+        "lightState": 0
+       }
+      ]
+     },
+     "command": {
+      "id": 0,
+      "name": "開燈",
+      "stateType": 0,
+      "stateFunction": null
+     }
+    }
+   ],
+   "agentTrigger": {
+    "id": 1,
+    "name": "裝置一",
+    "location": "廚房",
+    "functionStateList": [
+     {
+      "type": 0,
+      "lightState": 0
+     }
+    ]
+   }
+  }
+ ]
 }

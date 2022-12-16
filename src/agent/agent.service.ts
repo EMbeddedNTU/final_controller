@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { AgentConfig } from 'src/config/agent_config';
 import { ConfigService } from 'src/config/config.service';
 import { EffectType } from 'src/config/gesture_config';
+import { ChangeAgentProfileInput } from 'src/phone/phone';
 import { FunctionState, FunctionType } from 'src/state/function_state';
 import { LightState } from 'src/state/light_state';
 import { LockState } from 'src/state/lock_state';
 import { StateCommandService } from 'src/state/state_command_service';
-import { Agent, gestureInput } from './agent';
+import { Agent, GestureInput } from './agent';
 
 @Injectable()
 export class AgentService {
@@ -16,11 +18,9 @@ export class AgentService {
 
   registerAgent(body: Agent): boolean {
     let agentConfig = this.configService.readAgentConfig();
-    let targetAgent: Agent = agentConfig.agents.find(
-      (agent: Agent) => agent.id == body.id,
-    );
+    let targetAgent = this.getAgentById(agentConfig, body.id);
 
-    if (targetAgent == undefined) {
+    if (targetAgent == null) {
       agentConfig.agents.push(body);
     }
 
@@ -29,7 +29,44 @@ export class AgentService {
     return true;
   }
 
-  gesture(body: gestureInput): boolean {
+  replaceAgentProfile(
+    targetAgent: Agent,
+    name: string | null,
+    location: string | null,
+  ) {
+    targetAgent.name = name != null ? name : targetAgent.name;
+    targetAgent.location = location != null ? location : targetAgent.location;
+  }
+
+  changeAgentProfile(body: ChangeAgentProfileInput): boolean {
+    let agentConfig = this.configService.readAgentConfig();
+    let gestureConfig = this.configService.readGestureConfig();
+
+    let targetAgent = this.getAgentById(agentConfig, body.id);
+
+    if (targetAgent == null) {
+      return false;
+    } else {
+      this.replaceAgentProfile(targetAgent, body.name, body.location);
+    }
+
+    gestureConfig.gestureSettings.forEach((e) => {
+      if (e.agentTrigger?.id == body.id) {
+        this.replaceAgentProfile(e.agentTrigger, body.name, body.location);
+      }
+      e.effects.forEach((effect) => {
+        if (effect.agent?.id == body.id) {
+          this.replaceAgentProfile(effect.agent, body.name, body.location);
+        }
+      });
+    });
+
+    this.configService.saveAgentConfig(agentConfig);
+    this.configService.saveGestureConfig(gestureConfig);
+    return true;
+  }
+
+  gesture(body: GestureInput): boolean {
     let gestureConfig = this.configService.readGestureConfig();
     let agentConfig = this.configService.readAgentConfig();
 
@@ -38,17 +75,15 @@ export class AgentService {
       (e) => e.gestureType == body.gesture,
     );
     if (targetGestureSetting == undefined) {
-      return;
+      return false;
     }
     if (targetGestureSetting.effectType == EffectType.specific) {
       targetAgentId = targetGestureSetting.agentTrigger!.id;
     }
 
-    let targetAgent: Agent = agentConfig.agents.find(
-      (agent: Agent) => agent.id == targetAgentId,
-    );
+    let targetAgent = this.getAgentById(agentConfig, targetAgentId);
 
-    if (targetAgent == undefined) {
+    if (targetAgent == null) {
       return false;
     } else {
       let targetFunctionState = targetAgent.functionStateList.find(
@@ -77,13 +112,22 @@ export class AgentService {
 
   getStatus(id: number): FunctionState[] {
     let agentConfig = this.configService.readAgentConfig();
+    let targetAgent = this.getAgentById(agentConfig, id);
+    if (targetAgent == null) {
+      return [];
+    } else {
+      return targetAgent.functionStateList;
+    }
+  }
+
+  getAgentById(agentConfig: AgentConfig, id: number): Agent | null {
     let targetAgent: Agent = agentConfig.agents.find(
       (agent: Agent) => agent.id == id,
     );
     if (targetAgent == undefined) {
-      return;
-    } else {
-      return targetAgent.functionStateList;
+      return null;
     }
+
+    return targetAgent;
   }
 }

@@ -8,11 +8,12 @@ import { StateCommandFactory } from './state_command_factory';
 
 @Injectable()
 export class StateCommandService {
-  static stateCommandList: StateCommand[];
+  static stateCommandList: StateCommand[] = [];
 
   constructor(private readonly stateCmdFactory: StateCommandFactory) {
-    StateCommandService.stateCommandList = [];
-    this.initStateCommand(stateCmdFactory);
+    if (StateCommandService.stateCommandList.length == 0) {
+      this.initStateCommand(stateCmdFactory);
+    }
   }
 
   addLightStateCommand(
@@ -45,12 +46,12 @@ export class StateCommandService {
   }
 
   initStateCommand(factory: StateCommandFactory) {
-    this.addLightStateCommand('turn on light', (state) => {
+    this.addLightStateCommand('開燈', (state) => {
       state.lightState = LightStateEnum.ON;
       return state;
     });
 
-    this.addLightStateCommand('turn off light', (state) => {
+    this.addLightStateCommand('關燈', (state) => {
       state.lightState = LightStateEnum.OFF;
       return state;
     });
