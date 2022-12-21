@@ -1,3 +1,34 @@
 {
- "gestureSettings": []
+ "gestureSettings": [
+  {
+   "gestureType": "0",
+   "effectType": "0",
+   "effects": [
+    {
+     "agent": null,
+     "command": {
+      "id": 0,
+      "name": "開燈",
+      "stateType": 0
+     }
+    }
+   ],
+   "agentTrigger": null
+  },
+  {
+   "gestureType": "2",
+   "effectType": "1",
+   "effects": [
+    {
+     "command": {
+      "id": 1,
+      "name": "關燈",
+      "stateType": 0
+     },
+     "agent": null
+    }
+   ],
+   "agentTrigger": null
+  }
+ ]
 }

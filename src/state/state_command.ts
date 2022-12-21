@@ -1,25 +1,27 @@
+import { Exclude } from 'class-transformer';
 import { FunctionState, FunctionType } from './function_state';
 
 export type StateCommandFunc = (fState: FunctionState) => FunctionState;
 
 export class StateCommand {
-  constructor(
-    id: number,
-    name: string,
-    stateType: FunctionType,
-    stateFunction: StateCommandFunc,
-  ) {
-    this.id = id;
-    this.name = name;
-    this.stateType = stateType;
-    this.stateFunction = stateFunction;
-  }
+    constructor(
+        id: number,
+        name: string,
+        stateType: FunctionType,
+        stateFunction: StateCommandFunc,
+    ) {
+        this.id = id;
+        this.name = name;
+        this.stateType = stateType;
+        this.stateFunction = stateFunction;
+    }
 
-  id: number;
+    id: number;
 
-  name: string;
+    name: string;
 
-  stateType: FunctionType;
+    stateType: FunctionType;
 
-  stateFunction: StateCommandFunc;
+	@Exclude()
+    stateFunction: StateCommandFunc;
 }

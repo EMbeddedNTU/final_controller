@@ -2,9 +2,11 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AgentService } from 'src/agent/agent.service';
 import { GestureService } from 'src/gesture/gesture.service';
 import { AddGestureInput, DeleteGestureInput } from 'src/gesture/gesture_request_type';
+import { StateCommand } from 'src/state/state_command';
 import {
   ChangeAgentProfileInput,
   GestureSettingOption,
+  StateCommandOption,
   TransformedGestureSetting,
 } from './phone';
 import { PhoneService } from './phone.service';
@@ -19,8 +21,17 @@ export class PhoneController {
 
   @Get('gestureList')
   getGestureList(): TransformedGestureSetting[] {
-    console.log("get gesture list")
     return this.phoneService.getGestureList();
+  }
+
+  @Get('gestureSettingOption')
+  getGestureOption(): GestureSettingOption {
+    return this.phoneService.getGestureOption();
+  }
+
+  @Get('stateCommandOption')
+  getStateCommandOption(): StateCommandOption[] {
+    return this.phoneService.getStateCommandOption();
   }
 
   @Post('addGesture')
@@ -36,10 +47,5 @@ export class PhoneController {
   @Post('changeAgentProfile')
   changeAgentProfile(@Body() body: ChangeAgentProfileInput): boolean {
     return this.agentService.changeAgentProfile(body);
-  }
-
-  @Get('gestureOption')
-  getGestureOption(): GestureSettingOption {
-    return this.phoneService.getGestureOption();
   }
 }

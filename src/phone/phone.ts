@@ -7,8 +7,16 @@ export class GestureSettingOption {
 
   agentNameList: string[];
 
-  stateCommandNameList: string[];
+  // stateCommandNameList: string[];
 }
+
+
+export class StateCommandOption {
+  id: number;
+
+  name: string;
+}
+
 
 export class TransformedGestureSetting {
   // gestureType: string;
@@ -24,6 +32,7 @@ export class TransformedGestureSetting {
   stateCommandName: string;
 }
 
+
 export class GestureInput {
   gestureType: GestureType;
 
@@ -33,6 +42,7 @@ export class GestureInput {
 
   stateCommandId: number;
 }
+
 
 export class ChangeAgentProfileInput {
   id: number;

@@ -19,8 +19,9 @@ export class GestureService {
         
         gestureConfig.gestureSettings = gestureConfig.gestureSettings.filter((setting) =>
             setting.gestureType != input.gestureType ||
-            setting.effectType != input.effectType ||
-            setting.agentTrigger.id != input.triggerAgentId,
+            setting.effectType != input.effectType 
+            // ||
+            // setting.agentTrigger?.id != input.triggerAgentId,
         );
 
         this.configService.saveGestureConfig(gestureConfig);
@@ -31,9 +32,9 @@ export class GestureService {
         let gestureConfig = this.configService.readGestureConfig();
         let agentConfig = this.configService.readAgentConfig();
 
-        if(input.effectType == EffectType.specific && input.triggerAgentId == null) {
-            throw new HttpException("please provide a trigger agent", HttpStatus.BAD_REQUEST)
-        }
+        // if(input.effectType == EffectType.specific && input.triggerAgentId == null) {
+        //     throw new HttpException("please provide a trigger agent", HttpStatus.BAD_REQUEST)
+        // }
 
         let triggerAgent =
         input.triggerAgentId != null
