@@ -22,9 +22,9 @@ export class PhoneService {
   getGestureList(): TransformedGestureSetting[] {
     return this.configService.readGestureConfig().gestureSettings.map((e) => {
       let transformedGestureSetting = new TransformedGestureSetting();
-      transformedGestureSetting.gestureType = GestureTypeList[e.gestureType];
-      transformedGestureSetting.effectType = EffectTypeList[e.effectType];
-      transformedGestureSetting.agentName = e.agentTrigger?.name;
+      transformedGestureSetting.gestureType = e.gestureType;
+      transformedGestureSetting.effectType = e.effectType;
+      transformedGestureSetting.agentTriggerName = e.agentTrigger?.name;
       transformedGestureSetting.stateCommandName = e.effects[0].command.name;
       return transformedGestureSetting;
     });
@@ -47,38 +47,38 @@ export class PhoneService {
     };
   }
 
-  deleteGesture(body: GestureInput): boolean {
-    let gestureConfig = this.configService.readGestureConfig();
-    gestureConfig.gestureSettings = gestureConfig.gestureSettings.filter(
-      (e) =>
-        e.gestureType != body.gestureType || e.effectType != body.effectType,
-    );
-    this.configService.saveGestureConfig(gestureConfig);
+  // deleteGesture(body: GestureInput): boolean {
+  //   let gestureConfig = this.configService.readGestureConfig();
+  //   gestureConfig.gestureSettings = gestureConfig.gestureSettings.filter(
+  //     (e) =>
+  //       e.gestureType != body.gestureType || e.effectType != body.effectType,
+  //   );
+  //   this.configService.saveGestureConfig(gestureConfig);
 
-    return true;
-  }
+  //   return true;
+  // }
 
-  addGesture(body: GestureInput): boolean {
-    let gestureConfig = this.configService.readGestureConfig();
-    let agentConfig = this.configService.readAgentConfig();
-    let agent =
-      body.agentId != null
-        ? this.agentService.getAgentById(agentConfig, body.agentId)
-        : null;
-    let stateCommand = this.stateCommandService.getCommandById(
-      body.stateCommandId,
-    );
-    let newGestureSetting = new GestureSetting(
-      body.gestureType,
-      body.effectType,
-      [{ command: stateCommand, agent: agent }],
-      agent,
-    );
-    newGestureSetting.effects[0].command.stateFunction = null;
+  // addGesture(body: GestureInput): boolean {
+  //   let gestureConfig = this.configService.readGestureConfig();
+  //   let agentConfig = this.configService.readAgentConfig();
+  //   let agent =
+  //     body.agentId != null
+  //       ? this.agentService.getAgentById(agentConfig, body.agentId)
+  //       : null;
+  //   let stateCommand = this.stateCommandService.getCommandById(
+  //     body.stateCommandId,
+  //   );
+  //   let newGestureSetting = new GestureSetting(
+  //     body.gestureType,
+  //     body.effectType,
+  //     [{ command: stateCommand, agent: agent }],
+  //     agent,
+  //   );
+  //   newGestureSetting.effects[0].command.stateFunction = null;
 
-    gestureConfig.gestureSettings.push(newGestureSetting);
-    this.configService.saveGestureConfig(gestureConfig);
+  //   gestureConfig.gestureSettings.push(newGestureSetting);
+  //   this.configService.saveGestureConfig(gestureConfig);
 
-    return true;
-  }
+  //   return true;
+  // }
 }

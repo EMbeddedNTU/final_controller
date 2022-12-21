@@ -11,11 +11,15 @@ export class GestureSettingOption {
 }
 
 export class TransformedGestureSetting {
-  gestureType: string;
+  // gestureType: string;
 
-  effectType: string;
+  // effectType: string;
 
-  agentName?: string | null;
+  gestureType: GestureType;
+
+  effectType: EffectType;
+
+  agentTriggerName?: string | null;
 
   stateCommandName: string;
 }

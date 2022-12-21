@@ -1,19 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AgentService } from 'src/agent/agent.service';
-import { ConfigModule } from 'src/config/config.module';
 import { ConfigService } from 'src/config/config.service';
-import { GestureService } from 'src/gesture/gesture.service';
 import { StateCommandModule } from 'src/state/state_command.module';
 import { StateCommandFactory } from 'src/state/state_command_factory';
 import { StateCommandService } from 'src/state/state_command_service';
-import { PhoneController } from './phone.controller';
-import { PhoneService } from './phone.service';
+import { GestureService } from './gesture.service';
 
 @Module({
-  imports: [ConfigModule, StateCommandModule],
-  controllers: [PhoneController],
+  imports: [StateCommandModule],
+  controllers: [],
   providers: [
-    PhoneService,
     ConfigService,
     AgentService,
     GestureService,
@@ -21,4 +17,4 @@ import { PhoneService } from './phone.service';
     StateCommandFactory,
   ],
 })
-export class PhoneModule {}
+export class GestureModule {}

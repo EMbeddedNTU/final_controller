@@ -13,12 +13,12 @@ export class AgentController {
   }
 
   @Post('gesture')
-  gesture(@Body() body: GestureInput): boolean {
-    return this.agentService.gesture(body);
+  makeGesture(@Body() body: GestureInput): boolean {
+    return this.agentService.makeGesture(body);
   }
 
   @Get('/:id')
-  getStatus(@Param('id') id: number): FunctionState[] {
-    return this.agentService.getStatus(id);
+  getStates(@Param('id') id: number): FunctionState[] {
+    return this.agentService.getStates(id);
   }
 }

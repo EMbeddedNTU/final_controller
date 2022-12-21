@@ -21,5 +21,5 @@ export class Agent {
 
 export class GestureInput {
   agentId: number;
-  gesture: GestureType;
+  gestureType: GestureType;
 }

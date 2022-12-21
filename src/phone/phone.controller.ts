@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AgentService } from 'src/agent/agent.service';
+import { GestureService } from 'src/gesture/gesture.service';
+import { AddGestureInput, DeleteGestureInput } from 'src/gesture/gesture_request_type';
 import {
   ChangeAgentProfileInput,
-  GestureInput,
   GestureSettingOption,
   TransformedGestureSetting,
 } from './phone';
@@ -13,26 +14,28 @@ export class PhoneController {
   constructor(
     private readonly phoneService: PhoneService,
     private readonly agentService: AgentService,
+    private readonly gestureService: GestureService,
   ) {}
 
-  @Post('add')
-  addGesture(@Body() body: GestureInput): boolean {
-    return this.phoneService.addGesture(body);
+  @Get('gestureList')
+  getGestureList(): TransformedGestureSetting[] {
+    console.log("get gesture list")
+    return this.phoneService.getGestureList();
   }
 
-  @Post('delete')
-  deleteGesture(@Body() body: GestureInput): boolean {
-    return this.phoneService.deleteGesture(body);
+  @Post('addGesture')
+  addGesture(@Body() body: AddGestureInput): boolean {
+    return this.gestureService.addGesture(body);
+  }
+
+  @Post('deleteGesture')
+  deleteGesture(@Body() body: DeleteGestureInput): boolean {
+    return this.gestureService.deleteGesture(body);
   }
 
   @Post('changeAgentProfile')
   changeAgentProfile(@Body() body: ChangeAgentProfileInput): boolean {
     return this.agentService.changeAgentProfile(body);
-  }
-
-  @Get('gestureList')
-  getGestureList(): TransformedGestureSetting[] {
-    return this.phoneService.getGestureList();
   }
 
   @Get('gestureOption')

@@ -66,13 +66,13 @@ export class AgentService {
     return true;
   }
 
-  gesture(body: GestureInput): boolean {
+  makeGesture(body: GestureInput): boolean {
     let gestureConfig = this.configService.readGestureConfig();
     let agentConfig = this.configService.readAgentConfig();
 
     let targetAgentId = body.agentId;
     let targetGestureSetting = gestureConfig.gestureSettings.find(
-      (e) => e.gestureType == body.gesture,
+      (e) => e.gestureType == body.gestureType,
     );
     if (targetGestureSetting == undefined) {
       return false;
@@ -110,7 +110,7 @@ export class AgentService {
     }
   }
 
-  getStatus(id: number): FunctionState[] {
+  getStates(id: number): FunctionState[] {
     let agentConfig = this.configService.readAgentConfig();
     let targetAgent = this.getAgentById(agentConfig, id);
     if (targetAgent == null) {

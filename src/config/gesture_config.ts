@@ -42,9 +42,9 @@ export class GestureSetting {
 
   gestureType: GestureType;
 
-  agentTrigger?: Agent | null;
-
   effectType: EffectType;
+  
+  agentTrigger?: Agent | null;
 
   @Type(() => GestureEffect)
   effects: GestureEffect[];
