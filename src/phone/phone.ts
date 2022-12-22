@@ -33,21 +33,11 @@ export class TransformedGestureSetting {
   stateCommandName: string;
 }
 
-
-export class GestureInput {
-  gestureType: GestureType;
-
-  effectType: EffectType;
-
-  agentId?: number;
-
-  stateCommandId: number;
-}
-
-
 export class ChangeAgentProfileInput {
   id: number;
+
   name?: string;
+  
   location?: string;
 }
 

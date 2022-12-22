@@ -2,8 +2,8 @@
  "agents": [
   {
    "id": 0,
-   "name": "test_agent",
-   "location": "test_location",
+   "name": "test_agf",
+   "location": "test_",
    "functionStateList": []
   }
  ]

@@ -7,7 +7,7 @@ import { FunctionState, FunctionType } from 'src/state/function_state';
 import { LightState } from 'src/state/light_state';
 import { LockState } from 'src/state/lock_state';
 import { StateCommandService } from 'src/state/state_command_service';
-import { Agent, GestureInput } from './agent';
+import { Agent, AgentInfo, GestureInput } from './agent';
 
 @Injectable()
 export class AgentService {
@@ -36,6 +36,13 @@ export class AgentService {
   ) {
     targetAgent.name = name != null ? name : targetAgent.name;
     targetAgent.location = location != null ? location : targetAgent.location;
+  }
+
+  getAgentProfiles(): AgentInfo[] {
+    const agentInfoList: AgentInfo[] = this.configService
+            .readAgentConfig()
+            .agents;
+    return agentInfoList;
   }
 
   changeAgentProfile(body: ChangeAgentProfileInput): boolean {
