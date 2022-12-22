@@ -17,8 +17,8 @@ export class AgentService {
   ) {}
 
   registerAgent(body: Agent): boolean {
-    let agentConfig = this.configService.readAgentConfig();
-    let targetAgent = this.getAgentById(agentConfig, body.id);
+    const agentConfig = this.configService.readAgentConfig();
+    const targetAgent = this.getAgentById(agentConfig, body.id);
 
     if (targetAgent == null) {
       agentConfig.agents.push(body);
@@ -39,10 +39,10 @@ export class AgentService {
   }
 
   changeAgentProfile(body: ChangeAgentProfileInput): boolean {
-    let agentConfig = this.configService.readAgentConfig();
-    let gestureConfig = this.configService.readGestureConfig();
+    const agentConfig = this.configService.readAgentConfig();
+    const gestureConfig = this.configService.readGestureConfig();
 
-    let targetAgent = this.getAgentById(agentConfig, body.id);
+    const targetAgent = this.getAgentById(agentConfig, body.id);
 
     if (targetAgent == null) {
       return false;
@@ -51,8 +51,8 @@ export class AgentService {
     }
 
     gestureConfig.gestureSettings.forEach((e) => {
-      if (e.agentTrigger?.id == body.id) {
-        this.replaceAgentProfile(e.agentTrigger, body.name, body.location);
+      if (e.agentTarget?.id == body.id) {
+        this.replaceAgentProfile(e.agentTarget, body.name, body.location);
       }
       e.effects.forEach((effect) => {
         if (effect.agent?.id == body.id) {
@@ -67,32 +67,32 @@ export class AgentService {
   }
 
   makeGesture(body: GestureInput): boolean {
-    let gestureConfig = this.configService.readGestureConfig();
-    let agentConfig = this.configService.readAgentConfig();
+    const gestureConfig = this.configService.readGestureConfig();
+    const agentConfig = this.configService.readAgentConfig();
 
     let targetAgentId = body.agentId;
-    let targetGestureSetting = gestureConfig.gestureSettings.find(
+    const targetGestureSetting = gestureConfig.gestureSettings.find(
       (e) => e.gestureType == body.gestureType,
     );
     if (targetGestureSetting == undefined) {
       return false;
     }
-    if (targetGestureSetting.effectType == EffectType.specific) {
-      targetAgentId = targetGestureSetting.agentTrigger!.id;
+    if (targetGestureSetting.effectType == EffectType.global) {
+      targetAgentId = targetGestureSetting.agentTarget!.id;
     }
 
-    let targetAgent = this.getAgentById(agentConfig, targetAgentId);
+    const targetAgent = this.getAgentById(agentConfig, targetAgentId);
 
     if (targetAgent == null) {
       return false;
     } else {
-      let targetFunctionState = targetAgent.functionStateList.find(
+      const targetFunctionState = targetAgent.functionStateList.find(
         (functionState: FunctionState) =>
           functionState.type ==
           targetGestureSetting.effects[0].command.stateType,
       );
 
-      let transferFunc = this.stateCommandService.getCommandById(
+      const transferFunc = this.stateCommandService.getCommandById(
         targetGestureSetting.effects[0].command.id,
       ).stateFunction;
 
@@ -111,8 +111,8 @@ export class AgentService {
   }
 
   getStates(id: number): FunctionState[] {
-    let agentConfig = this.configService.readAgentConfig();
-    let targetAgent = this.getAgentById(agentConfig, id);
+    const agentConfig = this.configService.readAgentConfig();
+    const targetAgent = this.getAgentById(agentConfig, id);
     if (targetAgent == null) {
       return [];
     } else {
@@ -121,7 +121,7 @@ export class AgentService {
   }
 
   getAgentById(agentConfig: AgentConfig, id: number): Agent | null {
-    let targetAgent: Agent = agentConfig.agents.find(
+    const targetAgent: Agent = agentConfig.agents.find(
       (agent: Agent) => agent.id == id,
     );
     if (targetAgent == undefined) {

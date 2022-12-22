@@ -1,3 +1,4 @@
+import { AgentInfo } from 'src/agent/agent';
 import { EffectType, GestureType } from 'src/config/gesture_config';
 
 export class GestureSettingOption {
@@ -5,9 +6,7 @@ export class GestureSettingOption {
 
   effectTypeList: string[];
 
-  agentNameList: string[];
-
-  // stateCommandNameList: string[];
+  agentInfoList: AgentInfo[];
 }
 
 
@@ -26,6 +25,8 @@ export class TransformedGestureSetting {
   gestureType: GestureType;
 
   effectType: EffectType;
+
+  agentTargetName?: string | null;
 
   agentTriggerName?: string | null;
 

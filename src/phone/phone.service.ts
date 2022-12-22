@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { AgentInfo } from 'src/agent/agent';
 import { AgentService } from 'src/agent/agent.service';
 import { ConfigService } from 'src/config/config.service';
-import { GestureSetting } from 'src/config/gesture_config';
 import { StateCommandService } from 'src/state/state_command_service';
 import {
     EffectTypeList,
-    GestureInput,
     GestureSettingOption,
     GestureTypeList,
     StateCommandOption,
@@ -24,11 +23,13 @@ export class PhoneService {
         return this.configService
             .readGestureConfig()
             .gestureSettings.map((e) => {
-                let transformedGestureSetting = new TransformedGestureSetting();
+                const transformedGestureSetting = new TransformedGestureSetting();
                 transformedGestureSetting.gestureType = e.gestureType;
                 transformedGestureSetting.effectType = e.effectType;
                 transformedGestureSetting.agentTriggerName =
                     e.agentTrigger?.name;
+                    transformedGestureSetting.agentTargetName =
+                    e.agentTarget?.name;
                 transformedGestureSetting.stateCommandName =
                     e.effects[0].command.name;
                 return transformedGestureSetting;
@@ -36,22 +37,22 @@ export class PhoneService {
     }
 
     getGestureOption(): GestureSettingOption {
-        let agentNameList = this.configService
+        const agentInfoList: AgentInfo[] = this.configService
             .readAgentConfig()
-            .agents.flatMap((e) => e.name);
+            .agents;
 
         return {
             gestureTypeList: GestureTypeList,
             effectTypeList: EffectTypeList,
-            agentNameList: agentNameList,
+            agentInfoList: agentInfoList,
         };
     }
 
     getStateCommandOption(): StateCommandOption[] {
         // TODO:
-        let stateCommandOptionList: StateCommandOption[] =
+        const stateCommandOptionList: StateCommandOption[] =
             StateCommandService.stateCommandList.flatMap((e) => {
-                let option = new StateCommandOption();
+                const option = new StateCommandOption();
                 option.id = e.id;
                 option.name = e.name;
                 return option;
