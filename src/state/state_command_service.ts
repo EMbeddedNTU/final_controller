@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { FunctionType } from './function_state';
 import { LightState, LightStateEnum } from './light_state';
 import { LockState, LockStateEnum } from './lock_state';
-
 import { StateCommand } from './state_command';
 import { StateCommandFactory } from './state_command_factory';
 
@@ -20,7 +19,7 @@ export class StateCommandService {
         name: string,
         fState: (fState: LightState) => LightState,
     ) {
-        let stateCmd: StateCommand =
+        const stateCmd: StateCommand =
             this.stateCmdFactory.createStateCommand<LightState>(
                 name,
                 FunctionType.light,
@@ -33,7 +32,7 @@ export class StateCommandService {
         name: string,
         fState: (fState: LockState) => LockState,
     ) {
-        let stateCmd: StateCommand =
+        const stateCmd: StateCommand =
             this.stateCmdFactory.createStateCommand<LockState>(
                 name,
                 FunctionType.lock,
