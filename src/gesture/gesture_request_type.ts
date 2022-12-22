@@ -9,6 +9,8 @@ export class AddGestureInput {
     effectType: EffectType;
   
     triggerAgentId?: number | null;
+
+    targetAgentId?: number | null;
   
     stateCommandId: number;
 

@@ -41,6 +41,10 @@ export class GestureService {
             ? this.agentService.getAgentById(agentConfig, input.triggerAgentId)
             : null;
 
+            const targetAgent =
+            input.targetAgentId != null
+                ? this.agentService.getAgentById(agentConfig, input.targetAgentId)
+                : null;
         
         const stateCommand = this.stateCommandService.getCommandById(input.stateCommandId);
         const stateCommandAgent = this.agentService.getAgentById(agentConfig, input.stateCommandAgentId)
@@ -49,10 +53,9 @@ export class GestureService {
             input.gestureType,
             input.effectType,
             [{ command: stateCommand, agent: stateCommandAgent }],
+            targetAgent,
             triggerAgent,
         );
-
-        // newGestureSetting.effects[0].command.stateFunction = null;
 
         gestureConfig.gestureSettings.push(newGestureSetting);
         this.configService.saveGestureConfig(gestureConfig);

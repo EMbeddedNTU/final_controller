@@ -28,7 +28,7 @@ export class PhoneService {
                 transformedGestureSetting.effectType = e.effectType;
                 transformedGestureSetting.agentTriggerName =
                     e.agentTrigger?.name;
-                    transformedGestureSetting.agentTargetName =
+                transformedGestureSetting.agentTargetName =
                     e.agentTarget?.name;
                 transformedGestureSetting.stateCommandName =
                     e.effects[0].command.name;
