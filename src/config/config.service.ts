@@ -7,19 +7,19 @@ import { GestureConfig } from './gesture_config';
 @Injectable()
 export class ConfigService {
 
-    static AgentConfigFilepath: string = "./src/config/agent_config.json" 
-    static GestureConfigFilepath: string = "./src/config/gesture_config.json" 
+    static AgentConfigFilepath = "./src/config/agent_config.json" 
+    static GestureConfigFilepath = "./src/config/gesture_config.json" 
 
 	readAgentConfig(): AgentConfig {
-        let agentConfigJson: string = readFileSync(ConfigService.AgentConfigFilepath, {flag: 'r'}).toString();
-        let agentConfigJsonObj = JSON.parse(agentConfigJson);
-        let agentConfig: AgentConfig = plainToInstance(AgentConfig, agentConfigJsonObj);
+        const agentConfigJson: string = readFileSync(ConfigService.AgentConfigFilepath, {flag: 'r'}).toString();
+        const agentConfigJsonObj = JSON.parse(agentConfigJson);
+        const agentConfig: AgentConfig = plainToInstance(AgentConfig, agentConfigJsonObj);
         return agentConfig;
 	}
 
     saveAgentConfig(agentConfig: AgentConfig) {
         
-        let agentConfigJson: string = JSON.stringify(instanceToPlain(agentConfig), null, " ");
+        const agentConfigJson: string = JSON.stringify(instanceToPlain(agentConfig), null, " ");
 
         writeFileSync(ConfigService.AgentConfigFilepath, agentConfigJson, {
             flag: 'w',
@@ -27,15 +27,15 @@ export class ConfigService {
     }
 
     readGestureConfig(): GestureConfig {
-        let gestureConfigJson: string = readFileSync(ConfigService.GestureConfigFilepath, {flag: 'r'}).toString();
-        let gestureConfigJsonObj = JSON.parse(gestureConfigJson);
-        let gestureConfig: GestureConfig = plainToInstance(GestureConfig, gestureConfigJsonObj);
+        const gestureConfigJson: string = readFileSync(ConfigService.GestureConfigFilepath, {flag: 'r'}).toString();
+        const gestureConfigJsonObj = JSON.parse(gestureConfigJson);
+        const gestureConfig: GestureConfig = plainToInstance(GestureConfig, gestureConfigJsonObj);
         return gestureConfig;
 	}
 
     saveGestureConfig(gestureConfig: GestureConfig) {
         
-        let gestureConfigJson: string = JSON.stringify(instanceToPlain(gestureConfig), null, " ");
+        const gestureConfigJson: string = JSON.stringify(instanceToPlain(gestureConfig), null, " ");
 
         writeFileSync(ConfigService.GestureConfigFilepath, gestureConfigJson, {
             flag: 'w',

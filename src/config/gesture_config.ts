@@ -13,7 +13,8 @@ export enum GestureType {
 
 export enum EffectType {
   local,
-  specific,
+  // specific,
+  global,
 }
 
 export class GestureEffect {
@@ -32,17 +33,21 @@ export class GestureSetting {
     gestureType: GestureType,
     effectType: EffectType,
     effects: GestureEffect[],
+    agentTarget?: Agent | null,
     agentTrigger?: Agent | null,
   ) {
     this.gestureType = gestureType;
     this.effectType = effectType;
     this.effects = effects;
+    this.agentTarget = agentTarget;
     this.agentTrigger = agentTrigger;
   }
 
   gestureType: GestureType;
 
   effectType: EffectType;
+  
+  agentTarget?: Agent | null;
   
   agentTrigger?: Agent | null;
 

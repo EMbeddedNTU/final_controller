@@ -7,7 +7,7 @@ import { FunctionState, FunctionType } from 'src/state/function_state';
 import { LightState } from 'src/state/light_state';
 import { LockState } from 'src/state/lock_state';
 import { StateCommandService } from 'src/state/state_command_service';
-import { Agent, GestureInput } from './agent';
+import { Agent, AgentInfo, GestureInput } from './agent';
 
 @Injectable()
 export class AgentService {
@@ -17,8 +17,8 @@ export class AgentService {
     ) {}
 
     registerAgent(body: Agent): boolean {
-        let agentConfig = this.configService.readAgentConfig();
-        let targetAgent = this.getAgentById(agentConfig, body.id);
+        const agentConfig = this.configService.readAgentConfig();
+        const targetAgent = this.getAgentById(agentConfig, body.id);
 
         if (targetAgent == null) {
             agentConfig.agents.push(body);
@@ -39,11 +39,17 @@ export class AgentService {
             location != null ? location : targetAgent.location;
     }
 
-    changeAgentProfile(body: ChangeAgentProfileInput): boolean {
-        let agentConfig = this.configService.readAgentConfig();
-        let gestureConfig = this.configService.readGestureConfig();
+    getAgentProfiles(): AgentInfo[] {
+        const agentInfoList: AgentInfo[] =
+            this.configService.readAgentConfig().agents;
+        return agentInfoList;
+    }
 
-        let targetAgent = this.getAgentById(agentConfig, body.id);
+    changeAgentProfile(body: ChangeAgentProfileInput): boolean {
+        const agentConfig = this.configService.readAgentConfig();
+        const gestureConfig = this.configService.readGestureConfig();
+
+        const targetAgent = this.getAgentById(agentConfig, body.id);
 
         if (targetAgent == null) {
             return false;
@@ -52,9 +58,9 @@ export class AgentService {
         }
 
         gestureConfig.gestureSettings.forEach((e) => {
-            if (e.agentTrigger?.id == body.id) {
+            if (e.agentTarget?.id == body.id) {
                 this.replaceAgentProfile(
-                    e.agentTrigger,
+                    e.agentTarget,
                     body.name,
                     body.location,
                 );
@@ -76,32 +82,32 @@ export class AgentService {
     }
 
     makeGesture(body: GestureInput): boolean {
-        let gestureConfig = this.configService.readGestureConfig();
-        let agentConfig = this.configService.readAgentConfig();
+        const gestureConfig = this.configService.readGestureConfig();
+        const agentConfig = this.configService.readAgentConfig();
 
         let targetAgentId = body.agentId;
-        let targetGestureSetting = gestureConfig.gestureSettings.find(
+        const targetGestureSetting = gestureConfig.gestureSettings.find(
             (e) => e.gestureType == body.gestureType,
         );
         if (targetGestureSetting == undefined) {
             return false;
         }
-        if (targetGestureSetting.effectType == EffectType.specific) {
-            targetAgentId = targetGestureSetting.agentTrigger!.id;
+        if (targetGestureSetting.effectType == EffectType.global) {
+            targetAgentId = targetGestureSetting.agentTarget!.id;
         }
 
-        let targetAgent = this.getAgentById(agentConfig, targetAgentId);
+        const targetAgent = this.getAgentById(agentConfig, targetAgentId);
 
         if (targetAgent == null) {
             return false;
         } else {
-            let targetFunctionState = targetAgent.functionStateList.find(
+            const targetFunctionState = targetAgent.functionStateList.find(
                 (functionState: FunctionState) =>
                     functionState.type ==
                     targetGestureSetting.effects[0].command.stateType,
             );
 
-            let transferFunc = this.stateCommandService.getCommandById(
+            const transferFunc = this.stateCommandService.getCommandById(
                 targetGestureSetting.effects[0].command.id,
             ).stateFunction;
 
@@ -140,7 +146,7 @@ export class AgentService {
     }
 
     getAgentById(agentConfig: AgentConfig, id: number): Agent | null {
-        let targetAgent: Agent = agentConfig.agents.find(
+        const targetAgent: Agent = agentConfig.agents.find(
             (agent: Agent) => agent.id == id,
         );
         if (targetAgent == undefined) {

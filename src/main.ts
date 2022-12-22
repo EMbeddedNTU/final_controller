@@ -7,7 +7,8 @@ async function bootstrap() {
   app.enableCors();
   await app.listen(3000);
 
-  let service: ConfigService = new ConfigService();
+  const service: ConfigService = new ConfigService();
+  // service.saveAgentConfig({ agents: [new Agent(0, "test_agent", [], "test_location")] });
   service.saveAgentConfig({ agents: [] });
   service.saveGestureConfig({ gestureSettings: [] });
 }

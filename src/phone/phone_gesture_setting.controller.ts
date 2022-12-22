@@ -43,9 +43,4 @@ export class PhoneController {
   deleteGesture(@Body() body: DeleteGestureInput): boolean {
     return this.gestureService.deleteGesture(body);
   }
-
-  @Post('changeAgentProfile')
-  changeAgentProfile(@Body() body: ChangeAgentProfileInput): boolean {
-    return this.agentService.changeAgentProfile(body);
-  }
 }
