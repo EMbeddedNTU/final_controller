@@ -15,7 +15,7 @@ export class GestureService {
 
 
     deleteGesture(input: DeleteGestureInput): boolean {
-        let gestureConfig = this.configService.readGestureConfig();
+        const gestureConfig = this.configService.readGestureConfig();
         
         gestureConfig.gestureSettings = gestureConfig.gestureSettings.filter((setting) =>
             setting.gestureType != input.gestureType ||
@@ -29,23 +29,23 @@ export class GestureService {
     }
 
     addGesture(input: AddGestureInput): boolean {
-        let gestureConfig = this.configService.readGestureConfig();
-        let agentConfig = this.configService.readAgentConfig();
+        const gestureConfig = this.configService.readGestureConfig();
+        const agentConfig = this.configService.readAgentConfig();
 
         // if(input.effectType == EffectType.specific && input.triggerAgentId == null) {
         //     throw new HttpException("please provide a trigger agent", HttpStatus.BAD_REQUEST)
         // }
 
-        let triggerAgent =
+        const triggerAgent =
         input.triggerAgentId != null
             ? this.agentService.getAgentById(agentConfig, input.triggerAgentId)
             : null;
 
         
-        let stateCommand = this.stateCommandService.getCommandById(input.stateCommandId);
-        let stateCommandAgent = this.agentService.getAgentById(agentConfig, input.stateCommandAgentId)
+        const stateCommand = this.stateCommandService.getCommandById(input.stateCommandId);
+        const stateCommandAgent = this.agentService.getAgentById(agentConfig, input.stateCommandAgentId)
 
-        let newGestureSetting = new GestureSetting(
+        const newGestureSetting = new GestureSetting(
             input.gestureType,
             input.effectType,
             [{ command: stateCommand, agent: stateCommandAgent }],
