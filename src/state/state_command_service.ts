@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FunctionType } from './function_state';
 import { LightState, LightStateEnum } from './light_state';
-import { LockState } from './lock_state';
+import { LockState, LockStateEnum } from './lock_state';
 
 import { StateCommand } from './state_command';
 import { StateCommandFactory } from './state_command_factory';
@@ -49,13 +49,27 @@ export class StateCommandService {
     }
 
     initStateCommand(factory: StateCommandFactory) {
-        this.addLightStateCommand('開燈', (state) => {
-            state.lightState = LightStateEnum.ON;
+        this.addLightStateCommand('把燈亮度調高', (state) => {
+            if (state.lightState != LightStateEnum.PERCENT100) {
+                state.lightState += 1;
+            }
             return state;
         });
 
-        this.addLightStateCommand('關燈', (state) => {
-            state.lightState = LightStateEnum.OFF;
+        this.addLightStateCommand('把燈亮度調低', (state) => {
+            if (state.lightState != LightStateEnum.PERCENT0) {
+                state.lightState -= 1;
+            }
+            return state;
+        });
+
+        this.addLockStateCommand('把門鎖開啟', (state) => {
+            state.lockState = LockStateEnum.UNLOCKED;
+            return state;
+        });
+
+        this.addLockStateCommand('把門鎖鎖上', (state) => {
+            state.lockState = LockStateEnum.LOCKED;
             return state;
         });
     }
