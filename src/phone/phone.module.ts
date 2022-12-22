@@ -9,17 +9,22 @@ import { StateCommandService } from 'src/state/state_command_service';
 import { PhoneController } from './phone_gesture_setting.controller';
 import { PhoneService } from './phone.service';
 import { PhoneAgentSettingController } from './phone_agent_setting.controller';
+import { PhoneCommandController } from './phone_command.controller';
 
 @Module({
-  imports: [ConfigModule, StateCommandModule],
-  controllers: [PhoneController, PhoneAgentSettingController],
-  providers: [
-    PhoneService,
-    ConfigService,
-    AgentService,
-    GestureService,
-    StateCommandService,
-    StateCommandFactory,
-  ],
+    imports: [ConfigModule, StateCommandModule],
+    controllers: [
+        PhoneController,
+        PhoneAgentSettingController,
+        PhoneCommandController,
+    ],
+    providers: [
+        PhoneService,
+        ConfigService,
+        AgentService,
+        GestureService,
+        StateCommandService,
+        StateCommandFactory,
+    ],
 })
 export class PhoneModule {}

@@ -1,3 +1,19 @@
 {
- "agents": []
+ "agents": [
+  {
+   "id": 1,
+   "name": "Agent1",
+   "location": "location1",
+   "functionStateList": [
+    {
+     "type": 0,
+     "lightState": 0
+    },
+    {
+     "type": 1,
+     "lockState": 0
+    }
+   ]
+  }
+ ]
 }

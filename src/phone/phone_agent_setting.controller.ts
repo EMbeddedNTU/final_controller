@@ -5,9 +5,7 @@ import { ChangeAgentProfileInput } from './phone';
 
 @Controller('phone/agentSetting')
 export class PhoneAgentSettingController {
-    constructor(
-        private readonly agentService: AgentService,
-    ) {}
+    constructor(private readonly agentService: AgentService) {}
 
     @Get('agentProfiles')
     getAgentProfiles(): AgentInfo[] {
@@ -16,7 +14,7 @@ export class PhoneAgentSettingController {
 
     @Post('changeAgentProfile')
     changeAgentProfile(@Body() body: ChangeAgentProfileInput): boolean {
-		console.log(body);
+        console.log(body);
         return this.agentService.changeAgentProfile(body);
     }
 }
