@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { GestureService } from 'src/gesture/gesture.service';
 import {
     AddGestureInput,
@@ -29,8 +29,15 @@ export class PhoneController {
     }
 
     @Get('stateCommandOption')
-    getStateCommandOption(): StateCommandOption[] {
-        return this.phoneService.getStateCommandOption();
+    getAllStateCommandOption(): StateCommandOption[] {
+        return this.phoneService.getAllStateCommandOption();
+    }
+
+    @Get('stateCommandOption/:agentId')
+    getStateCommandOption(
+        @Param('agentId') agentId: number | null,
+    ): StateCommandOption[] {
+        return this.phoneService.getStateCommandOption(agentId);
     }
 
     @Post('addGesture')

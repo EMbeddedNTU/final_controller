@@ -23,13 +23,13 @@ export class PhoneService {
         return this.configService
             .readGestureConfig()
             .gestureSettings.map((e) => {
-                const transformedGestureSetting = new TransformedGestureSetting();
+                const transformedGestureSetting =
+                    new TransformedGestureSetting();
                 transformedGestureSetting.gestureType = e.gestureType;
                 transformedGestureSetting.effectType = e.effectType;
                 transformedGestureSetting.agentTriggerName =
                     e.agentTrigger?.name;
-                transformedGestureSetting.agentTargetName =
-                    e.agentTarget?.name;
+                transformedGestureSetting.agentTargetName = e.agentTarget?.name;
                 transformedGestureSetting.stateCommandName =
                     e.effects[0].command.name;
                 return transformedGestureSetting;
@@ -37,9 +37,8 @@ export class PhoneService {
     }
 
     getGestureOption(): GestureSettingOption {
-        const agentInfoList: AgentInfo[] = this.configService
-            .readAgentConfig()
-            .agents;
+        const agentInfoList: AgentInfo[] =
+            this.configService.readAgentConfig().agents;
 
         return {
             gestureTypeList: GestureTypeList,
@@ -48,8 +47,30 @@ export class PhoneService {
         };
     }
 
-    getStateCommandOption(): StateCommandOption[] {
-        // TODO:
+    getStateCommandOption(agentId: number): StateCommandOption[] {
+        const agentConfig = this.configService.readAgentConfig();
+        const targetAgent = this.agentService.getAgentById(
+            agentConfig,
+            agentId,
+        );
+
+        const functionTypes = targetAgent.functionStateList.flatMap(
+            (e) => e.type,
+        );
+        
+        let stateCommandOptionList = this.getAllStateCommandOption();
+        stateCommandOptionList = stateCommandOptionList.filter((e) => {
+            const stateCommand = this.stateCommandService.getCommandById(e.id);
+            if (functionTypes.includes(stateCommand.stateType)) {
+                return true;
+            }
+            return false;
+        });
+
+        return stateCommandOptionList;
+    }
+
+    getAllStateCommandOption(): StateCommandOption[] {
         const stateCommandOptionList: StateCommandOption[] =
             StateCommandService.stateCommandList.flatMap((e) => {
                 const option = new StateCommandOption();

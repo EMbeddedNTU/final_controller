@@ -40,8 +40,11 @@ export class AgentService {
     }
 
     getAgentProfiles(): AgentInfo[] {
-        const agentInfoList: AgentInfo[] =
+        let agentInfoList: Agent[] =
             this.configService.readAgentConfig().agents;
+        agentInfoList = agentInfoList.map(
+            (e) => new Agent(e.id, e.name, e.location, e.functionStateList),
+        );
         return agentInfoList;
     }
 
