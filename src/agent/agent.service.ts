@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AgentConfig } from 'src/config/agent_config';
 import { ConfigService } from 'src/config/config.service';
 import { EffectType } from 'src/config/gesture_config';
-import { ChangeAgentProfileInput } from 'src/phone/phone';
+import { ChangeAgentProfileInput, MakeCommandInput } from 'src/phone/phone';
 import { FunctionState, FunctionType } from 'src/state/function_state';
 import { LightState } from 'src/state/light_state';
 import { LockState } from 'src/state/lock_state';
@@ -40,8 +40,11 @@ export class AgentService {
     }
 
     getAgentProfiles(): AgentInfo[] {
-        const agentInfoList: AgentInfo[] =
+        let agentInfoList: Agent[] =
             this.configService.readAgentConfig().agents;
+        agentInfoList = agentInfoList.map(
+            (e) => new Agent(e.id, e.name, e.location, e.functionStateList),
+        );
         return agentInfoList;
     }
 
@@ -126,18 +129,18 @@ export class AgentService {
     }
 
     getStates(id: number): string {
-        let agentConfig = this.configService.readAgentConfig();
-        let targetAgent = this.getAgentById(agentConfig, id);
+        const agentConfig = this.configService.readAgentConfig();
+        const targetAgent = this.getAgentById(agentConfig, id);
         if (targetAgent == null) {
             return '';
         } else {
             let result: string = '';
-            for (let functionState of targetAgent.functionStateList) {
-                if (functionState.type == 0) {
-                    let lightState = functionState as LightState;
+            for (const functionState of targetAgent.functionStateList) {
+                if (functionState.type == FunctionType.light) {
+                    const lightState = functionState as LightState;
                     result = result + lightState.type + lightState.lightState;
-                } else if (functionState.type == 1) {
-                    let lockState = functionState as LockState;
+                } else if (functionState.type == FunctionType.lock) {
+                    const lockState = functionState as LockState;
                     result = result + lockState.type + lockState.lockState;
                 }
             }
@@ -154,5 +157,21 @@ export class AgentService {
         }
 
         return targetAgent;
+    }
+
+    makeCommand(body: MakeCommandInput): boolean {
+        const agentConfig = this.configService.readAgentConfig();
+        const targetAgent = this.getAgentById(agentConfig, body.agentId);
+        const stateCommand = this.stateCommandService.getCommandById(
+            body.stateCommandId,
+        );
+
+        let targetState = targetAgent.functionStateList.find(
+            (e) => e.type == stateCommand.stateType,
+        );
+        targetState = stateCommand.stateFunction(targetState);
+
+        this.configService.saveAgentConfig(agentConfig);
+        return true;
     }
 }

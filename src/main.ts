@@ -12,7 +12,7 @@ async function bootstrap() {
   const service: ConfigService = new ConfigService();
   const notificationService: NotificationService = new NotificationService();
   // service.saveAgentConfig({ agents: [] });
-  service.saveAgentConfig({ agents: [new Agent(0, "test_agent", [], "test_location")] });
+  service.saveAgentConfig({ agents: [new Agent(0, "test_agent", "test_location", [])] });
   service.saveGestureConfig({ gestureSettings: [] });
   notificationService.saveNotifications({ data: [] });
 }
