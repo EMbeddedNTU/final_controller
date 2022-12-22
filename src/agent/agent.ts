@@ -1,7 +1,13 @@
 import { GestureType } from 'src/config/gesture_config';
-import { FunctionState } from '../state/function_state';
+import { LightState } from 'src/state/light_state';
+import { LockState } from 'src/state/lock_state';
+import { FunctionState, FunctionType } from '../state/function_state';
 
-const TypeList = ['控制燈光', '控制鎖'];
+const TypeList = ['燈光', '門鎖'];
+const StateList = [
+    ['全暗', '25%亮度', '50%亮度', '75%亮度', '全亮'],
+    ['上鎖', '開啟'],
+];
 
 export class AgentInfo {
     constructor(
@@ -32,7 +38,17 @@ export class Agent extends AgentInfo {
             id,
             name,
             location,
-            functionStateList.flatMap((e) => TypeList[e.type]),
+            functionStateList.flatMap((e) => {
+                let stateString: string;
+                if (e.type == FunctionType.light) {
+                    stateString =
+                        StateList[e.type][(e as LightState).lightState];
+                }
+                if (e.type == FunctionType.lock) {
+                    stateString = StateList[e.type][(e as LockState).lockState];
+                }
+                return TypeList[e.type] + ' ： ' + stateString;
+            }),
         );
         this.functionStateList = functionStateList;
     }
