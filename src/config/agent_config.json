@@ -1,3 +1,10 @@
 {
- "agents": []
+ "agents": [
+  {
+   "id": 0,
+   "name": "test_agent",
+   "location": "test_location",
+   "functionStateList": []
+  }
+ ]
 }
