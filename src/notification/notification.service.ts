@@ -40,6 +40,7 @@ export class NotificationService {
 
     addNotification(input: Notification): boolean {
         const notificationData: NotificationData = this.readNotifications();
+        input.time = new Date().toLocaleDateString() + " " +  new Date().toLocaleTimeString();
         notificationData.data.push(input)
         this.saveNotifications(notificationData);
         return true;
